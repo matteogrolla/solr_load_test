@@ -1,0 +1,33 @@
+TODO:
+    per le queries ateco va usato il query model external (meglio usarlo per tutte)
+
+----------Estrazione phrase queries-----------
+
+curl 'http://localhost:8983/solr/race_posizione/select?q=*:*&fl=id,denominazione&wt=csv&rows=200000' > exampledocs/denom.csv
+
+http://192.168.1.3:8983/solr/race_posizione_aux/update/csv?stream.file=exampledocs/denom.csv&stream.contentType=text/csv;charset=utf-8&commit=true
+
+usato QueriesGen per estrarre le queries
+
+
+----------solr monitoring-----------
+iostat -dx 5
+
+altro test:
+1.1k term queries
+500 wildcard queries
+3k 2 terms mandatory term queries
+500 wildcards within word
+3k  phrase and span queries
+2k  slop queries
+
+
+-------------
+modifiche schema:
+    oggetto_sociale non stored      //per avere un confronto sulla dimensione dell'indice
+
+before running a test
+
+stop solr
+sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"
+start solr
