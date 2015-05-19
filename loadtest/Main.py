@@ -12,14 +12,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from loadtest.DocsGen import *
-from loadtest.TextGen import *
+import DocsGen as dg
+from FieldGen import *
+
+def gen_docs():
+    collection_url = "http://localhost:8983/solr/<collection_name>"
+    num_docs =  500
+    start_id = 0
+    num_threads = 8
 
 
-text_gen = FieldGen('../bin/wordlist1.txt')
+    dg.runMP(collection_url, num_docs, start_id, num_threads, get_gen_doc())
 
-dg = DocsGen("http://localhost:8983/solr/race_posizione")
-dg.text_gen = text_gen
+def get_gen_doc():
+    #define word dictionary
+    text_gen = FieldGen('../bin/wordlist_wiki.txt')
 
-dg.wipe_collection()
-dg.add_docs(1000)
+    #define how solr documents are generated
+    def gd(i):
+        doc = dict(
+            id=i,
+            fieldA='constantString',            #field with constant value
+            fieldB= text_gen.random(10),     #field with 10 words sampled randomly from dictionary
+            fieldC=text_gen.zipf_fast(100),     #field with 10 words sampled from dictionary by zipf law
+            fieldD=text_gen.random_code(16),    #field with 16 random characters (letters or numbers)
+            fieldE=text_gen.random_code(11, "0123456789"),     #field with 10 random characters (specifies admissible characters)
+            fieldF=text_gen.random(1, ["word1", "word2", "word3"]),  #field with 1 word chosen randomly from given sequence
+            fieldG=text_gen.random_tuple(4, ["word1", "word2", "word3"])    #multivalue field with 4 word chosen randomly from given sequence
+        )
+        return doc
+
+    return gd
+
+if __name__ == "__main__":
+    gen_docs()
