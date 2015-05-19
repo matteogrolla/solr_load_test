@@ -45,4 +45,6 @@ def get_gen_doc():
     return gd
 
 if __name__ == "__main__":
+
+    #generate documents and add them to a collection
     gen_docs()
