@@ -61,7 +61,7 @@ class FieldGen:
         emitted = 0
         len_w = len(self.w)
         while True:
-            indexes = np.random.zipf(1.1, num_words)
+            indexes = np.random.zipf(1.2, num_words)
             filtered = indexes[indexes < len_w]
             for i in filtered:
                 words.append(self.w[i])
@@ -76,7 +76,7 @@ class FieldGen:
 
         len_w = len(self.w)
 
-        indexes = np.random.zipf(1.1, num_words)
+        indexes = np.random.zipf(1.2, num_words)
         indexes[indexes >= len_w] = self.last_zipf_indexes
 
         #words = self.wnp[indexes]

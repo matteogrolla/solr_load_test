@@ -15,15 +15,6 @@
 import DocsGen as dg
 from FieldGen import *
 
-def gen_docs():
-    collection_url = "http://localhost:8983/solr/<collection_name>"
-    num_docs =  500
-    start_id = 0
-    num_threads = 8
-
-
-    dg.runMP(collection_url, num_docs, start_id, num_threads, get_gen_doc())
-
 def get_gen_doc():
     #define word dictionary
     text_gen = FieldGen('../bin/wordlist_wiki.txt')
@@ -47,4 +38,9 @@ def get_gen_doc():
 if __name__ == "__main__":
 
     #generate documents and add them to a collection
-    gen_docs()
+    collection_url = "http://localhost:8983/solr/<collection_name>"
+    num_docs =  500
+    start_id = 0
+    num_threads = 8
+
+    dg.runMP(collection_url, num_docs, start_id, num_threads, get_gen_doc())

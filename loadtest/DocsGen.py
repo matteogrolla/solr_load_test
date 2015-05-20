@@ -15,8 +15,10 @@
 import solr
 import logging
 import time
+import numpy as np
+import random
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 class DocsGen:
     def __init__(self, collection_url, threadId=0, fun=None):
@@ -31,7 +33,8 @@ class DocsGen:
         self.avgNumChar = 0
         batch = []
         for i in xrange(start,start+n):
-            doc = self.gen_doc(i)
+            i_str = str(i).rjust(9, '0')
+            doc = self.gen_doc(i_str)
             batch.append(doc)
             if i % self.batch_size == 0:
                 self.s.add_many(batch)
@@ -61,6 +64,10 @@ from FieldGen import *
 
 
 def run(threadID, collection_url, startDocID, numDocs, fun):
+    #Setting random seed so different run with same parameters produce same documents
+    np.random.seed(threadID)
+    random.seed(threadID)
+
     text_gen = FieldGen('../bin/wordlist_wiki.txt')
 
     dg = DocsGen(collection_url, threadID, fun)
