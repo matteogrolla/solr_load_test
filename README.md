@@ -13,7 +13,7 @@ to run the project you need to install
 ##Example:
 A quick example can be run on solr default collection: "collection1"
 
-``
+```
 edit Example.py
     to index documents on solr
         (optional) set configuration parameters
@@ -28,4 +28,4 @@ edit Example.py
             qg.gen_queries
          save script
          from command line: python Example.py
-````
+```
