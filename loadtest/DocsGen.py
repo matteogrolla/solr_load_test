@@ -65,8 +65,8 @@ from FieldGen import *
 
 def run(threadID, collection_url, startDocID, numDocs, fun):
     #Setting random seed so different run with same parameters produce same documents
-    np.random.seed(threadID)
-    random.seed(threadID)
+    np.random.seed(threadID+startDocID)
+    random.seed(threadID+startDocID)
 
     text_gen = FieldGen('../bin/wordlist_wiki.txt')
 
