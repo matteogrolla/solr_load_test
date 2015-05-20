@@ -77,6 +77,8 @@ class QueriesGen:
             #     words = [terms[i][0] for i in filtered_idx]
             #     str += '"%s"' % " ".join(words)
 
+            #TODO: generate mandatory terms query
+
             elif query_type == "slop":
                 str += '"%s"~10' %plain_term
 

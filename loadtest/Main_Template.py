@@ -12,8 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import DocsGen as dg
 from FieldGen import *
+import DocsGen as dGen
+import QueriesGen as qGen
+import Utils
+import random
 
 def get_gen_doc():
     #define word dictionary
@@ -35,12 +38,43 @@ def get_gen_doc():
 
     return gd
 
+def get_gen_query_A():
+    utils = Utils.Utils()
+    #variables accessible from gen_query_A()
+    wl_province = utils.load_wordlist("../bin/province.txt")
+
+    #term: an element of terms chosen randomly
+    #terms: list of (term, frequency) tuples
+    #output: a string containing the query (ex: "q=fieldA:<term[0]>")
+            #can return complex queries using pseudo join or other features
+    def gen_query_A(term, terms):
+
+        return "query"
+
+    return gen_query_A
+
 if __name__ == "__main__":
 
-    #generate documents and add them to a collection
-    collection_url = "http://localhost:8983/solr/<collection_name>"
+    solr_url = "http://localhost:8983/solr"
+    out_dir = "../output/dev/"
+    #Generate docs Posizione
+
+    collection_url = solr_url+"/race_posizione"
     num_docs =  500
     start_id = 0
     num_threads = 8
 
-    dg.runMP(collection_url, num_docs, start_id, num_threads, get_gen_doc())
+    #Note: execution proceeds right after spawning processes
+    #dGen.runMP(collection_url, num_docs, start_id, num_threads, get_gen_doc())
+
+    #Generate term queries denominazione
+    qg = qGen.QueriesGen(solr_url+"/<collection_name>")
+    qg.gen_queries("<source_field>", 20000, "term", out_dir+"queries_term_1.txt")
+
+    #Generate term queries denominazione
+    qg = qGen.QueriesGen(solr_url+"/<collection_name>")
+    qg.gen_queries("<source_field>", 20000, "wildcard", out_dir+"queries_wildcard_1.txt")
+
+    #Generate queries Posizione ateco
+    qg = qGen.QueriesGen(solr_url+"/<collection_name>")
+    qg.gen_queries("fieldA", 20000, get_gen_query_A(), out_dir+"queries_A.txt")
