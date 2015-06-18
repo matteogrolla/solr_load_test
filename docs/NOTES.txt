@@ -26,8 +26,16 @@ altro test:
 modifiche schema:
     oggetto_sociale non stored      //per avere un confronto sulla dimensione dell'indice
 
+
 before running a test
+
+cold test
 
 stop solr
 sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"
 start solr
+
+
+warm test
+
+find solr/cons_sost/data/index/ -regextype posix-extended -regex '.*(fdx|fnm|doc|pos|tim|tip|nvd|nvm|si)$' | xargs cat > /dev/null

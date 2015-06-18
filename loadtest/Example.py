@@ -14,7 +14,7 @@
 
 from FieldGen import *
 import DocsGen as dGen
-import QueriesGen as qGen
+import QueriesGenFromPopularTerms as qGenPT
 import Utils
 import random
 
@@ -51,9 +51,9 @@ if __name__ == "__main__":
     dGen.runMP(collection_url, num_docs, start_id, num_threads, get_gen_doc())
 
     #Generate term queries denominazione
-    qg = qGen.QueriesGen(collection_url)
-    #qg.gen_queries("description", 20000, "term", out_dir+"queries_term_description.txt")
+    qg = qGenPT.QueriesGenFromPopularTerms(collection_url)
+    #qg.gen_queries_for_field("description", 20000, "term", out_dir+"queries_term_description.txt")
 
     #Generate term queries denominazione
-    qg = qGen.QueriesGen(collection_url)
-    #qg.gen_queries("description", 20000, "wildcard", out_dir+"queries_wildcard_description.txt")
+    qg = qGenPT.QueriesGenFromPopularTerms(collection_url)
+    #qg.gen_queries_for_field("description", 20000, "wildcard", out_dir+"queries_wildcard_description.txt")
