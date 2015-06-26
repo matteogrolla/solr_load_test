@@ -107,7 +107,7 @@ class QueriesGenFromPopularTerms(QueriesGen):
         tree = ET.parse(urllib.urlopen(url)).getroot()
 
         terms = []
-        for el in tree.findall('.//lst[@name="topTerms"]/*'):
+        for el in self._get_top_terms(tree): #tree.findall('.//lst[@name="topTerms"]/*'):
             term = el.get("name")
             freq = el.text
             logging.debug("%s (%s)" % (term, freq))
@@ -116,4 +116,16 @@ class QueriesGenFromPopularTerms(QueriesGen):
             else:
                 terms.append(term)
         return terms
+
+    #in python 2.6 xpath queries are not available
+    def _get_top_terms(self, tree):
+        tags = tree.findall("lst")
+        for tag in tags:
+            if tag.get('name') == 'fields':
+                break
+        fields = tag
+        denominazione = fields.find("lst")
+        topTermsParent = denominazione.find("lst")
+        topTerms = topTermsParent.findall("int")
+        return topTerms
 
