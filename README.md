@@ -22,7 +22,7 @@ edit Example.py
         save script
         from command line: python Example.py
 
-    to generate queries
+    to generate queries (launch only after index has been generated)
          comment line for document generation
          uncomment lines starting with
             qg.gen_queries
