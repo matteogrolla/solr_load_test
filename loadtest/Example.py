@@ -48,7 +48,10 @@ if __name__ == "__main__":
     start_id = 0
     num_threads = 8
     #Note: execution proceeds right after spawning processes
-    dGen.runMP(collection_url, num_docs, start_id, num_threads, get_gen_doc())
+    #dGen.runMP(collection_url, num_docs, start_id, num_threads, get_gen_doc())
+
+    ## !!! use this single process call only for debugging
+    #dGen.run(0, collection_url, start_id, num_docs, get_gen_doc())
 
     #Generate term queries denominazione
     qg = qGenPT.QueriesGenFromPopularTerms(collection_url)

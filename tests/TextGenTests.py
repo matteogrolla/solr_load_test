@@ -15,10 +15,17 @@
 from nose import *
 from loadtest.FieldGen import *
 
-tg = FieldGen('../bin/wordlist1.txt')
+tg = FieldGen('../bin/wordlist_wiki.txt')
 
 def test_gen_rand():
     print tg.random()
 
 def test_gen_zipf():
     print tg.zipf()
+
+def test_gen_zipf():
+    print tg.zipf_fast(10)
+
+
+if __name__ == "__main__":
+    print tg.zipf_fast(1000)
