@@ -71,13 +71,14 @@ class FieldGen:
                     return text.join(words)
 
     def zipf_fast(self, num_words=50):
-        if self.last_zipf_indexes is None:
+        if (self.last_zipf_indexes is None or len(self.last_zipf_indexes)<num_words):
             self.last_zipf_indexes = np.array(self._zipf_indexes(num_words))
 
         len_w = len(self.w)
 
         indexes = np.random.zipf(1.2, num_words)
-        indexes[indexes >= len_w] = self.last_zipf_indexes
+        bad_idxs = (indexes >= len_w)
+        indexes[bad_idxs] = self.last_zipf_indexes[bad_idxs]
 
         #words = self.wnp[indexes]
         '''
